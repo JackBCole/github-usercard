@@ -8,7 +8,7 @@ import axios from 'axios'
 const myGithub = 'https://api.github.com/users/JackBCole'
 axios.get(myGithub)
 .then(function (something) {
-debugger
+
 something.data
 })
 .catch(function (error) {
@@ -40,7 +40,7 @@ const githubProfile = myGithub.something.data
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+//const followersArray = [];
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -63,11 +63,20 @@ const followersArray = [];
 */
 const profileCards = document.querySelector('.cards')
 const gitCard = githubProfileMaker({
-  imageURL: '"https://avatars3.githubusercontent.com/u/64171526?v=4"',
-  name: myGithub.name,
-  username:
+  imageURL: githubProfile.avatar_url,
+  name: githubProfile.name,
+  username: githubProfile.login,
+  location: githubProfile.location,
+  profile: githubProfile.profile,
+  followers: githubProfile.followers,
+  following: githubProfile.following,
+  bio: githubProfile.bio,
 })
-function githubProfileMaker(imageURL, ){
+
+console.log(gitCard)
+
+function githubProfileMaker(imageURL, name, username, location, profile, followers,
+  following, bio){
 
 
   const card = document.createElement('div')
@@ -77,43 +86,43 @@ function githubProfileMaker(imageURL, ){
   profilePic.src = imageURL
   card.appendChild(profilePic)
 
-  const name = document.createElement('h3')
-  name.classList.add('.card .name')
-  name.textContent = `${githubProfile.name}`
+  const gitName = document.createElement('h3')
+  gitName.classList.add('.card .name')
+  gitName.textContent = `${name}`
   
-  card.appendChild(name)
+  card.appendChild(gitName)
 
-  const username = document.createElement('p')
-  username.classList('.card .username')
-  username.textContent = `${githubProfile.username}`
-  card.appendChild(username)
+  const gitUsername = document.createElement('p')
+  gitUsername.classList('.card .username')
+  gitUsername.textContent = `${username}`
+  card.appendChild(gitUsername)
 
-  const location = document.createElement('p')
-  location.classList('.card p')
-  location.textContent = `${githubProfile.location}`
-  card.appendChild(location)
+  const userLocation = document.createElement('p')
+  userLocation.classList('.card p')
+  userLocation.textContent = `${location}`
+  card.appendChild(userLocation)
 
-  const profile = document.createElement('p')
-  profile.textContent = `${githubProfile.profile}`
-  profile.classList('.card p')
+  const gitProfile = document.createElement('p')
+  gitProfile.textContent = `${profile}`
+  gitProfile.classList('.card p')
 
-  card.appendChild(profile)
+  card.appendChild(gitProfile)
 
-  const followers = document.createElement('p')
-  followers.classList('.card p')
-  followers.textContent = `${githubProfile.followers}`
-  card.appendChild(followers)
+  const gitFollowers = document.createElement('p')
+  gitFollowers.classList('.card p')
+  gitFollowers.textContent = `${followers}`
+  card.appendChild(gitFollowers)
 
-  const following = document.createElement('p')
-  following.classList('.card p')
-  following.textContent = `${githubProfile.following}`
+  const gitFollowing = document.createElement('p')
+  gitFollowing.classList('.card p')
+  gitFollowing.textContent = `${following}`
 
-  card.appendChild(following)
+  card.appendChild(gitFollowing)
 
-  const bio = document.createElement('p')
-  bio.classList('.card p')
-  bio.textContent = `${githubProfile.bio}`
-  card.appendChild(bio)
+  const gitBio = document.createElement('p')
+  gitBio.classList('.card p')
+  gitBio.textContent = `${bio}`
+  card.appendChild(gitBio)
 
   profileCards.appendChild(card)
 
