@@ -1,9 +1,20 @@
+import axios from 'axios'
+
 /*
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+const myGithub = 'https://api.github.com/users/JackBCole'
+axios.get(myGithub)
+.then(function (something) {
+debugger
+something.data
+})
+.catch(function (error) {
+// debugger
+console.log(error)
+})
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -16,6 +27,7 @@
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+const githubProfile = myGithub.something.data
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -49,7 +61,66 @@ const followersArray = [];
       </div>
     </div>
 */
+const profileCards = document.querySelector('.cards')
+const gitCard = githubProfileMaker({
+  imageURL: '"https://avatars3.githubusercontent.com/u/64171526?v=4"',
+  name: myGithub.name,
+  username:
+})
+function githubProfileMaker(imageURL, ){
 
+
+  const card = document.createElement('div')
+  
+  const profilePic = document.createElement('img')
+  profilePic.classList.add('.card img')
+  profilePic.src = imageURL
+  card.appendChild(profilePic)
+
+  const name = document.createElement('h3')
+  name.classList.add('.card .name')
+  name.textContent = `${githubProfile.name}`
+  
+  card.appendChild(name)
+
+  const username = document.createElement('p')
+  username.classList('.card .username')
+  username.textContent = `${githubProfile.username}`
+  card.appendChild(username)
+
+  const location = document.createElement('p')
+  location.classList('.card p')
+  location.textContent = `${githubProfile.location}`
+  card.appendChild(location)
+
+  const profile = document.createElement('p')
+  profile.textContent = `${githubProfile.profile}`
+  profile.classList('.card p')
+
+  card.appendChild(profile)
+
+  const followers = document.createElement('p')
+  followers.classList('.card p')
+  followers.textContent = `${githubProfile.followers}`
+  card.appendChild(followers)
+
+  const following = document.createElement('p')
+  following.classList('.card p')
+  following.textContent = `${githubProfile.following}`
+
+  card.appendChild(following)
+
+  const bio = document.createElement('p')
+  bio.classList('.card p')
+  bio.textContent = `${githubProfile.bio}`
+  card.appendChild(bio)
+
+  profileCards.appendChild(card)
+
+  return card
+}
+console.log(profileCards)
+console.log(githubProfileMaker())
 /*
   List of LS Instructors Github username's:
     tetondan
