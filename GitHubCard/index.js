@@ -5,16 +5,16 @@ import axios from 'axios'
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-const myGithub = 'https://api.github.com/users/JackBCole'
-axios.get(myGithub)
-.then(function (something) {
-
-something.data
-})
-.catch(function (error) {
-// debugger
-console.log(error)
-})
+axios.get(" https://api.github.com/users/JackBCole")
+  .then(response => {
+    console.log(response);
+    const cards = document.querySelector('.cards');
+    const gitcard = githubProfileMaker(response.data);
+    cards.appendChild(gitcard);
+  })
+  .catch(error => {
+    console.log("The data was not returned", error);
+  });
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -27,7 +27,6 @@ console.log(error)
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
-const githubProfile = myGithub.something.data
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -40,7 +39,7 @@ const githubProfile = myGithub.something.data
     user, and adding that card to the DOM.
 */
 
-//const followersArray = [];
+
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -61,75 +60,111 @@ const githubProfile = myGithub.something.data
       </div>
     </div>
 */
-const profileCards = document.querySelector('.cards')
-const gitCard = githubProfileMaker({
-  imageURL: githubProfile.avatar_url,
-  name: githubProfile.name,
-  username: githubProfile.login,
-  location: githubProfile.location,
-  profile: githubProfile.profile,
-  followers: githubProfile.followers,
-  following: githubProfile.following,
-  bio: githubProfile.bio,
-})
 
-console.log(gitCard)
-
-function githubProfileMaker(imageURL, name, username, location, profile, followers,
-  following, bio){
-
-
-  const card = document.createElement('div')
-  
-  const profilePic = document.createElement('img')
-  profilePic.classList.add('.card img')
-  profilePic.src = imageURL
-  card.appendChild(profilePic)
-
-  const gitName = document.createElement('h3')
-  gitName.classList.add('.card .name')
-  gitName.textContent = `${name}`
-  
-  card.appendChild(gitName)
-
-  const gitUsername = document.createElement('p')
-  gitUsername.classList('.card .username')
-  gitUsername.textContent = `${username}`
-  card.appendChild(gitUsername)
-
-  const userLocation = document.createElement('p')
-  userLocation.classList('.card p')
-  userLocation.textContent = `${location}`
-  card.appendChild(userLocation)
-
-  const gitProfile = document.createElement('p')
-  gitProfile.textContent = `${profile}`
-  gitProfile.classList('.card p')
-
-  card.appendChild(gitProfile)
-
-  const gitFollowers = document.createElement('p')
-  gitFollowers.classList('.card p')
-  gitFollowers.textContent = `${followers}`
-  card.appendChild(gitFollowers)
-
-  const gitFollowing = document.createElement('p')
-  gitFollowing.classList('.card p')
-  gitFollowing.textContent = `${following}`
-
-  card.appendChild(gitFollowing)
-
-  const gitBio = document.createElement('p')
-  gitBio.classList('.card p')
-  gitBio.textContent = `${bio}`
-  card.appendChild(gitBio)
-
-  profileCards.appendChild(card)
-
-  return card
+function githubProfileMaker(item) {
+  const card = document.createElement('div');
+  const cardImg = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const cardName = document.createElement('h3');
+  const cardUsername = document.createElement('p');
+  const cardLocation = document.createElement('p');
+  const cardProfile = document.createElement('p');
+  const cardLink = document.createElement('a');
+  const cardFollowers = document.createElement('p');
+  const cardFollowing = document.createElement('p');
+  const cardBio = document.createElement('p');
+  card.appendChild(cardImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(cardName);
+  cardInfo.appendChild(cardUsername);
+  cardInfo.appendChild(cardLocation);
+  cardInfo.appendChild(cardProfile);
+  cardInfo.appendChild(cardLink);
+  cardInfo.appendChild(cardFollowers);
+  cardInfo.appendChild(cardFollowing);
+  cardInfo.appendChild(cardBio);
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name');
+  cardUsername.classList.add('username');
+  cardImg.src = item.avatar_url;
+  cardName.textContent = item.name;
+  cardUsername.textContent = item.login;
+  cardLocation.textContent = `Location: ${item.location}`;
+  cardProfile.textContent = 'Profile: ';
+  cardLink.textContent = item.url;
+  cardLink.href = item.url;
+  cardFollowers.textContent = `Followers: ${item.followers}`;
+  cardFollowing.textContent = `Following: ${item.following}`;
+  cardBio.textContent = `Bio: ${item.bio}`;
+  return card;
 }
-console.log(profileCards)
-console.log(githubProfileMaker())
+// function githubProfileMaker(item){
+
+
+//   const card = document.createElement('div')
+//   const cardInfo = document.createElement('div')
+  
+//   card.appendChild(cardInfo)
+//   card.appendChild(profilePic)
+
+//   const profilePic = document.createElement('img')
+//   profilePic.src = item.avatar_url
+//   card.appendChild(profilePic)
+
+//   const gitName = document.createElement('h3')
+//   gitName.textContent = item.name
+//   cardInfo.appendChild(gitName)
+
+//   const gitUsername = document.createElement('p')
+//   gitUsername.textContent = item.username
+//   cardInfo.appendChild(gitUsername)
+
+//   const userLocation = document.createElement('p')
+//   userLocation.textContent = `Location: ${item.location}`
+//   cardInfo.appendChild(userLocation)
+
+//   const gitProfile = document.createElement('p')
+//   gitProfile.textContent = item.profile
+//   cardInfo.appendChild(gitProfile)
+
+//   const gitFollowers = document.createElement('p')
+//   gitFollowers.textContent = `followers: ${item.followers}`
+//   cardInfo.appendChild(gitFollowers)
+
+//   const gitFollowing = document.createElement('p')
+//   gitFollowing.textContent = `following: ${item.following}`
+//   cardInfo.appendChild(gitFollowing)
+
+//   const gitBio = document.createElement('p')
+//   gitBio.textContent = item.bio
+//   cardInfo.appendChild(gitBio)
+
+//   card.classList.add('card');
+//   cardInfo.classList.add('card-info');
+//   gitName.classList.add('name');
+//   gitUsername.classList.add('username');
+
+
+//   return card
+// }
+
+// console.log(githubProfileMaker(card))
+
+const followersArray = ['emcleary', 'jonivander', 'sami-alaloosi', 'danieltantonio', 'jaketorrez'];
+followersArray.forEach(item => {
+  axios
+    .get(`https://api.github.com/users/${item}`)
+    .then(response => {
+      console.log(response);
+      const cards = document.querySelector('.cards');
+      const gitcard = githubProfileMaker(response.data);
+      cards.appendChild(gitcard);
+    })
+    .catch(error => {
+      console.log("The data was not returned", error);
+    })
+})
 /*
   List of LS Instructors Github username's:
     tetondan
